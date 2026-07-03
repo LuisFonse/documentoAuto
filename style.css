@@ -1,0 +1,396 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg,#3b4252,#5e81ac);
+    margin:0;
+}
+
+.contenedor{
+    width:90%;
+    max-width:700px;
+    margin:auto;
+    text-align:center;
+}
+
+/* ========================= */
+/* CABECERA HERO */
+/* ========================= */
+
+.hero{
+    margin:38px 0 18px;
+    padding:18px 16px 12px;
+    border-radius:16px;
+    background:linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.22);
+    box-shadow:0 10px 24px rgba(0,0,0,.22);
+    backdrop-filter:blur(2px);
+}
+
+.hero-icono i{
+    font-size:21px;
+    color:#d7e8ff;
+    text-shadow:0 2px 8px rgba(0,0,0,.35);
+}
+
+.hero-modelo{
+    margin-top:6px;
+    font-size:42px;
+    font-weight:900;
+    letter-spacing:1px;
+    line-height:1.05;
+    text-transform:uppercase;
+    color:#f6fbff;
+    text-shadow:
+        0 2px 14px rgba(0,0,0,.6),
+        0 0 20px rgba(116,188,255,.28);
+}
+
+.hero-patente{
+    margin-top:6px;
+    font-size:30px;
+    font-weight:800;
+    letter-spacing:1.2px;
+    color:#d8e7ff;
+    text-shadow:0 2px 10px rgba(0,0,0,.45);
+}
+
+.hero-subtitulo{
+    margin-top:8px;
+    font-size:21px;
+    font-weight:600;
+    letter-spacing:.2px;
+    color:#eef6ff;
+    opacity:.96;
+}
+
+/* ========================= */
+/* TITULO */
+/* ========================= */
+
+h1{
+    margin-top:30px;
+    font-size:36px;
+    font-weight:900;
+    text-align:center;
+    letter-spacing:.8px;
+
+    color:#ffffff !important;
+
+    text-shadow:
+        0 2px 12px rgba(0,0,0,.6),
+        0 0 20px rgba(120,170,255,.45);
+
+    -webkit-text-fill-color:#ffffff !important;
+}
+
+/* línea decorativa */
+h1::after{
+    content:"";
+    display:block;
+    width:140px;
+    height:4px;
+    margin:14px auto 0;
+
+    background:linear-gradient(90deg,#4dd0e1,#7c4dff,#4dd0e1);
+    border-radius:20px;
+
+    box-shadow:0 0 12px rgba(124,77,255,.4);
+}
+
+/* ========================= */
+/* FOTO */
+/* ========================= */
+
+.foto{
+    width:100%;
+    border-radius:16px;
+    margin-bottom:30px;
+    box-shadow:0 10px 24px rgba(0,0,0,.28);
+}
+
+/* ========================= */
+/* TARJETAS GENERALES */
+/* ========================= */
+
+.tarjeta{
+    background:white;
+    padding:22px;
+    margin:18px 0;
+    border-radius:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+    transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.tarjeta:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 30px rgba(0,0,0,.18);
+}
+
+/* ========================= */
+/* BOTONES */
+/* ========================= */
+
+.tarjeta a{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+
+    margin-top:15px;
+    padding:11px 24px;
+    border-radius:8px;
+
+    text-decoration:none;
+    font-weight:bold;
+    color:white;
+
+    background:linear-gradient(135deg,#1976d2,#0d47a1);
+    transition:all .25s;
+}
+
+.tarjeta a:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(25,118,210,.35);
+}
+
+.tarjeta a i{
+    font-size:16px;
+}
+
+/* ========================= */
+/* INFORMACIÓN VEHÍCULO */
+/* ========================= */
+
+.info-vehiculo{
+    text-align:left;
+}
+
+.info-vehiculo h2{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    margin-bottom:25px;
+    color:#1976d2;
+    font-size:28px;
+}
+
+/* GRID FICHA */
+.ficha-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+}
+
+.dato{
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    padding:12px;
+    background:#f8faff;
+    border-radius:12px;
+    border:1px solid #edf2ff;
+
+    transition:.25s;
+}
+
+.dato:hover{
+    background:#eef4ff;
+    transform:translateY(-2px);
+}
+
+.dato i{
+    font-size:24px;
+    color:#1976d2;
+    width:28px;
+    text-align:center;
+}
+
+.dato span{
+    display:block;
+    font-size:12px;
+    color:#777;
+}
+
+.dato strong{
+    display:block;
+    font-size:15px;
+    font-weight:700;
+    color:#222;
+}
+
+/* ========================= */
+/* DASHBOARD - 4 EN UNA FILA */
+/* ========================= */
+
+.panel-resumen{
+    margin:10px 0 20px;
+}
+
+.grid-resumen-horizontal{
+    display:flex;
+    flex-wrap:nowrap;
+    gap:10px;
+    justify-content:space-between;
+}
+
+.grid-resumen-horizontal .card-resumen{
+    flex:1 1 0;
+    min-width:0;
+
+    border-radius:14px;
+    padding:10px 6px;
+    text-align:center;
+
+    transition:all .25s;
+    box-shadow:0 6px 14px rgba(0,0,0,.12);
+}
+
+.grid-resumen-horizontal .card-resumen:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 22px rgba(0,0,0,.18);
+}
+
+/* COLORES DASHBOARD */
+.card-resumen.total{
+    background:#eef4ff;
+    border:1px solid #cfe0ff;
+}
+
+.card-resumen.ok{
+    background:#eefaf2;
+    border:1px solid #bfe7cb;
+}
+
+.card-resumen.aviso{
+    background:#fff8e5;
+    border:1px solid #ffe08a;
+}
+
+.card-resumen.alerta{
+    background:#fff0f0;
+    border:1px solid #f3c0c0;
+}
+
+/* ICONOS DASHBOARD */
+.card-resumen.total .icono{ color:#1565c0; }
+.card-resumen.ok .icono{ color:#2e7d32; }
+.card-resumen.aviso .icono{ color:#d68910; }
+.card-resumen.alerta .icono{ color:#c62828; }
+
+.grid-resumen-horizontal .icono{
+    font-size:22px;
+    margin-bottom:4px;
+}
+
+.grid-resumen-horizontal .numero{
+    font-size:22px;
+    font-weight:bold;
+    line-height:1;
+}
+
+.grid-resumen-horizontal .texto{
+    font-size:12px;
+    opacity:.75;
+}
+
+/* ========================= */
+/* ESTADOS DOCUMENTOS */
+/* ========================= */
+
+.vigencia{
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    margin:18px 0;
+    padding:14px;
+
+    border-radius:12px;
+    font-size:15px;
+    font-weight:500;
+}
+
+.vigencia i{
+    font-size:30px;
+    flex-shrink:0;
+}
+
+.vigencia div{
+    flex:1;
+    line-height:1.4;
+    text-align:left;
+}
+
+/* OK */
+.vigencia.ok{
+    background:#eefaf2;
+    color:#2e7d32;
+    border-left:5px solid #2e7d32;
+}
+
+/* AVISO */
+.vigencia.aviso{
+    background:#fff8e5;
+    color:#d68910;
+    border-left:5px solid #f4b400;
+}
+
+/* ALERTA */
+.vigencia.alerta{
+    background:#fff0f0;
+    color:#c62828;
+    border-left:5px solid #c62828;
+}
+
+/* ========================= */
+/* FOOTER */
+/* ========================= */
+
+footer{
+    text-align:center;
+    color:white;
+    margin:50px 0 30px;
+}
+
+footer hr{
+    margin-bottom:20px;
+    opacity:.35;
+}
+
+/* ========================= */
+/* RESPONSIVE */
+/* ========================= */
+
+@media (max-width:700px){
+    .hero{
+        margin-top:24px;
+        padding:14px 12px 10px;
+    }
+
+    .hero-modelo{
+        font-size:32px;
+    }
+
+    .hero-patente{
+        font-size:24px;
+    }
+
+    .hero-subtitulo{
+        font-size:18px;
+    }
+
+    .ficha-grid{
+        grid-template-columns:1fr;
+    }
+
+    /* dashboard se adapta en móvil */
+    .grid-resumen-horizontal{
+        flex-wrap:wrap;
+    }
+
+    .grid-resumen-horizontal .card-resumen{
+        flex:1 1 45%;
+    }
+}
