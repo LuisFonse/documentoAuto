@@ -39,6 +39,28 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (patente && vehiculo.patente) {
             patente.textContent = String(vehiculo.patente).toUpperCase();
         }
+
+        setFichaDesdeVehiculo(vehiculo);
+    }
+
+    function setFichaDesdeVehiculo(vehiculo) {
+        if (!vehiculo) return;
+
+        const fichaTitulo = document.getElementById("fichaVehiculoTitulo");
+        const fichaPatente = document.getElementById("fichaPatente");
+        const fichaModelo = document.getElementById("fichaModelo");
+
+        if (fichaTitulo) {
+            fichaTitulo.textContent = vehiculo.modelo || "Vehículo";
+        }
+
+        if (fichaPatente) {
+            fichaPatente.textContent = vehiculo.patente ? String(vehiculo.patente).toUpperCase() : "-";
+        }
+
+        if (fichaModelo) {
+            fichaModelo.textContent = vehiculo.modelo || "-";
+        }
     }
 
     function setModoRestringidoUI() {

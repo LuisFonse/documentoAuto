@@ -396,7 +396,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (error) {
-            setEstado(`No se pudo iniciar sesión: ${error.message}`, "error");
+            const detalles = [
+                error.message,
+                error.status ? `HTTP ${error.status}` : null,
+                error.code ? `code: ${error.code}` : null
+            ].filter(Boolean).join(" | ");
+
+            setEstado(`No se pudo iniciar sesión: ${detalles}`, "error");
+            console.warn("Supabase auth error", error);
             return;
         }
 
