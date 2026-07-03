@@ -1,36 +1,4 @@
 document.addEventListener("DOMContentLoaded", async () => {
-
-    const documentosFallback = [
-        {
-            nombre: "Padrón",
-            tipo: "padron",
-            icono: "bi-file-earmark-text",
-            archivo: "documentos/padron.pdf",
-            vence: null
-        },
-        {
-            nombre: "Permiso de Circulación",
-            tipo: "permiso_circulacion",
-            icono: "bi-car-front-fill",
-            archivo: "documentos/permiso circulacion.pdf",
-            vence: "2026-08-31"
-        },
-        {
-            nombre: "Seguro Obligatorio (SOAP)",
-            tipo: "soap",
-            icono: "bi-shield-check",
-            archivo: "documentos/seguro obligatoro 2026.pdf",
-            vence: "2027-03-31"
-        },
-        {
-            nombre: "Revisión Técnica",
-            tipo: "revision_tecnica",
-            icono: "bi-tools",
-            archivo: "documentos/revision.pdf",
-            vence: "2027-03-31"
-        }
-    ];
-
     const iconosPorTipo = {
         padron: "bi-file-earmark-text",
         permiso_circulacion: "bi-car-front-fill",
@@ -55,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function getCardFromUrl() {
         const params = new URLSearchParams(window.location.search);
-        return params.get("card");
+        return params.get("card") || params.get("nfc");
     }
 
     function setHeroDesdeVehiculo(vehiculo) {
@@ -71,6 +39,30 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (patente && vehiculo.patente) {
             patente.textContent = String(vehiculo.patente).toUpperCase();
         }
+    }
+
+    function setModoRestringidoUI() {
+        const heroModelo = document.querySelector(".hero-modelo");
+        const heroPatente = document.querySelector(".hero-patente");
+        const heroSubtitulo = document.querySelector(".hero-subtitulo");
+
+        if (heroModelo) heroModelo.textContent = "ACCESO RESTRINGIDO";
+        if (heroPatente) heroPatente.textContent = "";
+        if (heroSubtitulo) heroSubtitulo.textContent = "Escanea una tarjeta NFC válida para ver documentos.";
+
+        const foto = document.querySelector(".foto");
+        const ficha = document.querySelector(".info-vehiculo");
+
+        if (foto) foto.style.display = "none";
+        if (ficha) ficha.style.display = "none";
+    }
+
+    function setModoClienteUI() {
+        const foto = document.querySelector(".foto");
+        const ficha = document.querySelector(".info-vehiculo");
+
+        if (foto) foto.style.display = "block";
+        if (ficha) ficha.style.display = "block";
     }
 
     function setUltimaActualizacion() {
@@ -102,6 +94,25 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
             el.textContent = current;
         }, 30);
+    }
+
+    function renderAccesoRestringido(mensaje) {
+        setModoRestringidoUI();
+
+        const contenedor = document.getElementById("lista-documentos");
+        if (!contenedor) return;
+
+        contenedor.innerHTML = `
+            <div class="tarjeta">
+                <h2><i class="bi bi-shield-lock-fill"></i> Acceso restringido</h2>
+                <p>${mensaje}</p>
+            </div>
+        `;
+
+        setNumber("totalDocs", 0);
+        setNumber("vigentesDocs", 0);
+        setNumber("proximosDocs", 0);
+        setNumber("vencidosDocs", 0);
     }
 
     function renderDocumentos(documentos) {
@@ -207,13 +218,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         setNumber("vencidosDocs", vencidos);
     }
 
-    async function cargarDocumentosDesdeSupabase() {
+    async function cargarDocumentosDesdeSupabase(card) {
         const config = getConfig();
-        const card = getCardFromUrl();
 
-        if (!isSupabaseDisponible(config) || !card) {
+        if (!isSupabaseDisponible(config)) {
             return null;
         }
+
+        setModoClienteUI();
 
         const supabaseClient = window.supabase.createClient(config.url, config.anonKey);
 
@@ -270,17 +282,28 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    let documentos = documentosFallback;
+    const card = getCardFromUrl();
 
-    try {
-        const documentosSupabase = await cargarDocumentosDesdeSupabase();
-        if (Array.isArray(documentosSupabase)) {
-            documentos = documentosSupabase.length > 0 ? documentosSupabase : documentosFallback;
-        }
-    } catch (error) {
-        console.warn("No se pudo cargar desde Supabase. Se usa modo local.", error);
+    if (!card) {
+        renderAccesoRestringido("Esta tarjeta no es valida. Debes ingresar con un codigo NFC en la URL.");
+        setUltimaActualizacion();
+        return;
     }
 
-    renderDocumentos(documentos);
+    try {
+        const documentosSupabase = await cargarDocumentosDesdeSupabase(card);
+
+        if (documentosSupabase === null) {
+            renderAccesoRestringido("Configuracion de Supabase incompleta.");
+        } else if (documentosSupabase.length === 0) {
+            renderAccesoRestringido("No hay datos disponibles para este codigo NFC o el cliente esta bloqueado.");
+        } else {
+            renderDocumentos(documentosSupabase);
+        }
+    } catch (error) {
+        console.warn("No se pudo cargar desde Supabase.", error);
+        renderAccesoRestringido("No se pudo validar la tarjeta en este momento.");
+    }
+
     setUltimaActualizacion();
 });
