@@ -358,6 +358,150 @@ footer hr{
 }
 
 /* ========================= */
+/* ADMIN */
+/* ========================= */
+
+.admin-contenedor{
+    padding-bottom:40px;
+}
+
+.admin-estado{
+    margin:14px 0;
+    padding:12px 14px;
+    border-radius:12px;
+    color:#e8f1ff;
+    background:rgba(22,32,53,.6);
+    border:1px solid rgba(255,255,255,.18);
+    text-align:left;
+}
+
+.admin-estado.error{
+    background:#4a1f24;
+    border-color:#a9444e;
+}
+
+.admin-card h2{
+    margin-top:0;
+}
+
+.admin-panel.oculto,
+.oculto{
+    display:none;
+}
+
+.admin-form,
+.admin-grid-form{
+    display:grid;
+    gap:10px;
+    text-align:left;
+}
+
+.admin-grid-form{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    margin-top:10px;
+}
+
+.admin-grid-form.two-col{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.admin-form input,
+.admin-grid-form input,
+.admin-grid-form select{
+    border:1px solid #cedaf0;
+    border-radius:10px;
+    padding:11px 12px;
+    font-size:14px;
+}
+
+.admin-btn{
+    border:none;
+    border-radius:10px;
+    padding:11px 14px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.admin-btn.principal{
+    background:linear-gradient(135deg,#1e75d6,#0f4b9a);
+    color:#fff;
+}
+
+.admin-btn.secundario{
+    background:#eef3ff;
+    color:#1e3a6d;
+}
+
+.admin-btn.mini{
+    padding:7px 10px;
+    font-size:12px;
+}
+
+.admin-btn.danger{
+    background:#fbe8ea;
+    color:#9a2231;
+}
+
+.admin-header-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.check-inline{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 0;
+}
+
+.tabla-scroll{
+    overflow-x:auto;
+    margin-top:10px;
+}
+
+.admin-tabla{
+    width:100%;
+    border-collapse:collapse;
+    min-width:560px;
+}
+
+.admin-tabla th,
+.admin-tabla td{
+    border-bottom:1px solid #e7edf9;
+    padding:10px;
+    text-align:left;
+    font-size:14px;
+}
+
+.admin-tabla th{
+    color:#35527a;
+    font-weight:700;
+}
+
+.documentos-admin{
+    margin-top:12px;
+    display:grid;
+    gap:10px;
+}
+
+.doc-item{
+    border:1px solid #d8e3f7;
+    border-radius:10px;
+    padding:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.doc-item-actions{
+    display:flex;
+    gap:8px;
+}
+
+/* ========================= */
 /* RESPONSIVE */
 /* ========================= */
 
@@ -377,6 +521,21 @@ footer hr{
 
     .hero-subtitulo{
         font-size:18px;
+    }
+
+    .admin-header-row{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .admin-grid-form,
+    .admin-grid-form.two-col{
+        grid-template-columns:1fr;
+    }
+
+    .doc-item{
+        flex-direction:column;
+        align-items:flex-start;
     }
 
     .ficha-grid{

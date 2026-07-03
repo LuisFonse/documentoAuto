@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin | Documentos Vehículo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css?v=3">
+</head>
+<body>
+<div class="contenedor admin-contenedor">
+
+    <header class="hero">
+        <div class="hero-icono">
+            <i class="bi bi-shield-lock-fill"></i>
+        </div>
+        <div class="hero-modelo">Panel Administrador</div>
+        <div class="hero-subtitulo">Usuarios habilitados y documentos del vehículo</div>
+    </header>
+
+    <div id="estadoApp" class="admin-estado"></div>
+
+    <section id="loginCard" class="tarjeta admin-card">
+        <h2><i class="bi bi-box-arrow-in-right"></i> Acceso Admin</h2>
+        <form id="loginForm" class="admin-form">
+            <label>Email</label>
+            <input id="emailInput" type="email" required placeholder="admin@correo.com">
+
+            <label>Contraseña</label>
+            <input id="passwordInput" type="password" required placeholder="********">
+
+            <button type="submit" class="admin-btn principal">Iniciar sesión</button>
+        </form>
+    </section>
+
+    <section id="adminPanel" class="admin-panel oculto">
+
+        <div class="tarjeta admin-card">
+            <div class="admin-header-row">
+                <h2><i class="bi bi-people-fill"></i> Usuarios habilitados</h2>
+                <button id="logoutBtn" class="admin-btn secundario">Cerrar sesión</button>
+            </div>
+
+            <form id="clienteForm" class="admin-grid-form">
+                <input id="clienteNombre" type="text" required placeholder="Nombre cliente">
+                <input id="clienteEmail" type="email" placeholder="Email cliente">
+                <input id="clienteTelefono" type="text" placeholder="Teléfono">
+                <input id="clienteNfc" type="text" required placeholder="Código NFC (único)">
+                <label class="check-inline">
+                    <input id="clienteHabilitado" type="checkbox" checked>
+                    Habilitado
+                </label>
+                <button type="submit" class="admin-btn principal">Crear usuario</button>
+            </form>
+
+            <div class="tabla-scroll">
+                <table class="admin-tabla">
+                    <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>NFC</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody id="clientesBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tarjeta admin-card">
+            <h2><i class="bi bi-car-front-fill"></i> Vehículo y documentos</h2>
+
+            <label>Seleccionar cliente</label>
+            <select id="clienteSelect"></select>
+
+            <form id="vehiculoForm" class="admin-grid-form two-col">
+                <input id="vehiculoPatente" type="text" required placeholder="Patente">
+                <input id="vehiculoModelo" type="text" required placeholder="Modelo">
+                <button type="submit" class="admin-btn principal">Guardar vehículo</button>
+            </form>
+
+            <form id="documentoForm" class="admin-grid-form two-col">
+                <select id="docTipo" required>
+                    <option value="">Tipo documento</option>
+                    <option value="padron">Padrón</option>
+                    <option value="permiso_circulacion">Permiso de circulación</option>
+                    <option value="soap">Seguro obligatorio (SOAP)</option>
+                    <option value="revision_tecnica">Revisión técnica</option>
+                </select>
+                <input id="docNombre" type="text" required placeholder="Nombre visible">
+                <input id="docVence" type="date">
+                <input id="docArchivo" type="file" accept="application/pdf" required>
+                <button type="submit" class="admin-btn principal">Subir o reemplazar documento</button>
+            </form>
+
+            <div id="documentosAdmin" class="documentos-admin"></div>
+        </div>
+    </section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="admin.js?v=1"></script>
+</body>
+</html>
