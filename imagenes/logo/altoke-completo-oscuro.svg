@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 380" width="520" height="380"><g transform="translate(196 0)">
+  <defs>
+    <linearGradient id="coBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2f8bff"/>
+      <stop offset="1" stop-color="#3a3fd4"/>
+    </linearGradient>
+    <linearGradient id="coGl" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".45"/>
+      <stop offset=".55" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="coCard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16285a"/>
+      <stop offset="1" stop-color="#070f2b"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="128" height="128" rx="30" fill="url(#coBg)"/>
+  <rect x="0" y="0" width="128" height="128" rx="30" fill="url(#coGl)"/>
+  <rect x="1" y="1" width="126" height="126" rx="29" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2"/>
+  <!-- arco -->
+  <path d="M40 98 A40 40 0 0 1 58 24" fill="none" stroke="#ffffff" stroke-opacity=".55" stroke-width="5" stroke-linecap="round"/>
+  <!-- documento -->
+  <g fill="none" stroke="#ffffff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M26 44 H42 L50 52 V92 H26 Z"/>
+    <path d="M42 44 V52 H50"/>
+    <path d="M32 62 H44 M32 70 H44"/>
+  </g>
+  <circle cx="34" cy="82" r="6.5" fill="#ffffff"/>
+  <path d="M30.8 82 L33.2 84.4 L37.4 79.8" fill="none" stroke="#2f6bff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- auto -->
+  <g fill="none" stroke="#ffffff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M80 58 H95 Q99 58 102 61 L110 70 Q118 71 120.5 76 Q122 79 122 83 V87 Q122 91 118 91 H114 A7.5 7.5 0 0 0 99 91 H82"/>
+    <circle cx="106.5" cy="92.5" r="4.6" fill="#ffffff" stroke="none"/>
+    <path d="M107 79 Q112 78 118 77.5"/>
+    <path d="M108 86 H117"/>
+  </g>
+  <!-- tarjeta NFC -->
+  <g transform="rotate(10 66 66)">
+    <rect x="47" y="30" width="38" height="62" rx="8" fill="url(#coCard)"/>
+    <rect x="47.8" y="30.8" width="36.4" height="60.4" rx="7.4" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="1.6"/>
+    <g fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round">
+      <path d="M62 54 a6 6 0 0 1 0 9"/>
+      <path d="M67.5 49 a12 12 0 0 1 0 19"/>
+      <path d="M73 44 a18 18 0 0 1 0 29"/>
+    </g>
+    <circle cx="57.5" cy="58.5" r="2.2" fill="#fff"/>
+    <path d="M56 80 H76" stroke="#fff" stroke-opacity=".35" stroke-width="2.4" stroke-linecap="round"/>
+  </g></g><g transform="translate(58 168)">
+  <defs>
+    <linearGradient id="coAz" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="100" y2="100">
+      <stop offset="0" stop-color="#1f6bff"/>
+      <stop offset="1" stop-color="#4aa3ff"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke-width="17" stroke-linejoin="miter" stroke-miterlimit="10">
+    <path d="M6 100 L38 10 L70 100" stroke="url(#coAz)"/>
+    <path d="M94 0 V100" stroke="url(#coAz)"/>
+    <path d="M114 8.5 H188 M151 8.5 V100" stroke="#ffffff"/>
+    <circle cx="228" cy="65" r="26.5" stroke="#ffffff"/>
+    <path d="M281 0 V100 M325 30 L289 66 M301 55 L329 100" stroke="#ffffff"/>
+    <path d="M343.5 65 H396.5 A26.5 26.5 0 1 0 390 82.4" stroke="#ffffff"/>
+  </g>
+  <rect x="0" y="122" width="78" height="6" rx="3" fill="url(#coAz)"/>
+  <rect x="98" y="122" width="304" height="6" rx="3" fill="#ffffff"/></g>
+  <text x="260" y="350" text-anchor="middle" font-family="-apple-system, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="24" font-weight="500" fill="#ffffff">Los documentos de tu vehículo, <tspan fill="#7cc0ff" font-style="italic" font-weight="600">al toque.</tspan></text>
+</svg>
