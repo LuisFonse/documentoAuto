@@ -221,14 +221,29 @@ document.addEventListener("DOMContentLoaded", async () => {
     // ============================================================
 
     async function entrarAlPortal(conservarMensaje = false) {
+        const { data: sesionUsuario } = await supabase.auth.getUser();
+        const emailSesion = (sesionUsuario?.user?.email || "").toLowerCase();
+
+        // Siempre se filtra por el email de quien ingresó: el admin puede ver a todos los clientes
         const { data, error } = await supabase
             .from("clientes")
             .select("id, nombre, email, nfc_codigo, habilitado")
+            .eq("email", emailSesion)
+            .eq("habilitado", true)
             .maybeSingle();
 
         if (error || !data) {
+            const { data: esAdmin } = await supabase.rpc("es_admin");
             await supabase.auth.signOut();
             mostrarVista("vistaLogin");
+
+            if (!error && esAdmin) {
+                setEstado(conservarMensaje
+                    ? "Clave actualizada. Esta es una cuenta de administrador: entra por admin.html con tu nueva clave."
+                    : "Esta es una cuenta de administrador y no tiene un vehículo asociado. Entra por admin.html.", "error");
+                return;
+            }
+
             setEstado(error
                 ? `No se pudo cargar tu cuenta: ${traducirError(error)}`
                 : "Tu email no está habilitado. Contacta al administrador.", "error");
