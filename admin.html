@@ -6,7 +6,7 @@
     <title>Panel Admin | Documentos Vehículo</title>
     <link rel="icon" type="image/png" href="imagenes/favicon.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
 <div class="contenedor admin-contenedor">
@@ -52,7 +52,12 @@
                 <input id="clienteNombre" type="text" required placeholder="Nombre cliente">
                 <input id="clienteEmail" type="email" required placeholder="Email cliente (para su acceso)">
                 <input id="clienteTelefono" type="text" placeholder="Teléfono">
-                <input id="clienteNfc" type="text" required placeholder="Código NFC (único)">
+                <div class="campo-codigo">
+                    <input id="clienteNfc" type="text" required readonly title="Se genera automáticamente">
+                    <button id="regenerarNfc" type="button" class="admin-btn secundario" title="Generar otro código">
+                        <i class="bi bi-arrow-repeat"></i>
+                    </button>
+                </div>
                 <label class="check-inline">
                     <input id="clienteHabilitado" type="checkbox" checked>
                     Habilitado
@@ -85,6 +90,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js?v=2"></script>
-<script src="admin.js?v=3"></script>
+<script src="admin.js?v=4"></script>
 </body>
 </html>

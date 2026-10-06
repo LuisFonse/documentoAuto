@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const clienteHabilitado = document.getElementById("clienteHabilitado");
     const clienteSubmit = document.getElementById("clienteSubmit");
     const clienteCancelar = document.getElementById("clienteCancelar");
+    const regenerarNfc = document.getElementById("regenerarNfc");
 
     const TOTAL_DOCS = 3;
 
@@ -44,6 +45,31 @@ document.addEventListener("DOMContentLoaded", () => {
             .replaceAll(">", "&gt;")
             .replaceAll('"', "&quot;")
             .replaceAll("'", "&#39;");
+    }
+
+    // Código NFC aleatorio (sin caracteres confusos como 0/o, 1/l/i)
+    function generarCodigoNfc() {
+        const alfabeto = "abcdefghjkmnpqrstuvwxyz23456789";
+        const bytes = new Uint8Array(8);
+        crypto.getRandomValues(bytes);
+        let codigo = "";
+        bytes.forEach((b) => { codigo += alfabeto[b % alfabeto.length]; });
+        return `nfc-${codigo}`;
+    }
+
+    function linkFicha(codigo) {
+        const base = window.location.href.replace(/admin\.html.*$/, "");
+        return `${base}index.html?card=${encodeURIComponent(codigo)}`;
+    }
+
+    async function copiarLink(codigo) {
+        const link = linkFicha(codigo);
+        try {
+            await navigator.clipboard.writeText(link);
+            setEstado(`Link copiado: ${link}`);
+        } catch {
+            prompt("Copia este link:", link);
+        }
     }
 
     function primero(valor) {
@@ -98,6 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${docs}/${TOTAL_DOCS}</td>
                 <td>${cliente.habilitado ? "Habilitado" : "Bloqueado"}</td>
                 <td class="acciones-celda">
+                    <button class="admin-btn mini secundario" data-action="copiar" data-codigo="${escapeHtml(cliente.nfc_codigo)}" title="Copiar link de la ficha"><i class="bi bi-link-45deg"></i> Link</button>
                     <button class="admin-btn mini secundario" data-action="editar" data-id="${cliente.id}">Editar</button>
                     <button class="admin-btn mini ${cliente.habilitado ? "danger" : "secundario"}" data-action="toggle" data-id="${cliente.id}">
                         ${cliente.habilitado ? "Bloquear" : "Habilitar"}
@@ -127,6 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
         editandoId = null;
         clienteForm.reset();
         clienteHabilitado.checked = true;
+        clienteNfc.value = generarCodigoNfc();
+        regenerarNfc.classList.remove("oculto");
         clienteSubmit.textContent = "Crear usuario";
         clienteCancelar.classList.add("oculto");
     }
@@ -141,6 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
         clienteTelefono.value = cliente.telefono || "";
         clienteNfc.value = cliente.nfc_codigo || "";
         clienteHabilitado.checked = Boolean(cliente.habilitado);
+        regenerarNfc.classList.add("oculto");
         clienteSubmit.textContent = "Guardar cambios";
         clienteCancelar.classList.remove("oculto");
         clienteNombre.focus();
@@ -167,7 +197,13 @@ document.addEventListener("DOMContentLoaded", () => {
             ? supabase.from("clientes").update(payload).eq("id", editandoId)
             : supabase.from("clientes").insert(payload);
 
-        const { error } = await consulta;
+        let { error } = await consulta;
+
+        // Si (muy raro) el código aleatorio ya existía, se genera otro y se reintenta una vez
+        if (error && error.code === "23505" && !editandoId && String(error.message).includes("nfc")) {
+            payload.nfc_codigo = generarCodigoNfc();
+            ({ error } = await supabase.from("clientes").insert(payload));
+        }
 
         if (error) {
             setEstado(`No se pudo guardar: ${mensajeError(error)}`, "error");
@@ -256,10 +292,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (btn.dataset.action === "toggle") {
             await toggleCliente(btn.dataset.id);
+        } else if (btn.dataset.action === "copiar") {
+            await copiarLink(btn.dataset.codigo);
         } else if (btn.dataset.action === "editar") {
             entrarEnEdicion(btn.dataset.id);
         }
     });
 
+    regenerarNfc.addEventListener("click", () => {
+        clienteNfc.value = generarCodigoNfc();
+    });
+
+    clienteNfc.value = generarCodigoNfc();
     bootstrap();
 });

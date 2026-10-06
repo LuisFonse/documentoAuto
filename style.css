@@ -548,6 +548,23 @@ footer hr{
     text-decoration:underline;
 }
 
+.campo-codigo{
+    display:flex;
+    gap:6px;
+}
+
+.campo-codigo input{
+    flex:1;
+    min-width:0;
+    background:#f2f5fb;
+    color:#35527a;
+    font-family:monospace;
+    border:1px solid #cedaf0;
+    border-radius:10px;
+    padding:11px 12px;
+    font-size:14px;
+}
+
 .botones-fila{
     display:flex;
     gap:8px;
