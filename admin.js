@@ -125,6 +125,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${cliente.habilitado ? "Habilitado" : "Bloqueado"}</td>
                 <td class="acciones-celda">
                     <button class="admin-btn mini secundario" data-action="copiar" data-codigo="${escapeHtml(cliente.nfc_codigo)}" title="Copiar link de la ficha"><i class="bi bi-link-45deg"></i> Link</button>
+                    <a class="admin-btn mini secundario" target="_blank" rel="noopener" title="Diseño de la tarjeta para imprimir"
+                       href="tarjeta.html?codigo=${encodeURIComponent(cliente.nfc_codigo)}&nombre=${encodeURIComponent(cliente.nombre || "")}&patente=${encodeURIComponent(vehiculo ? vehiculo.patente || "" : "")}">
+                        <i class="bi bi-credit-card-2-front"></i> Tarjeta
+                    </a>
                     <button class="admin-btn mini secundario" data-action="editar" data-id="${cliente.id}">Editar</button>
                     <button class="admin-btn mini ${cliente.habilitado ? "danger" : "secundario"}" data-action="toggle" data-id="${cliente.id}">
                         ${cliente.habilitado ? "Bloquear" : "Habilitar"}
