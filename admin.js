@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function linkFicha(codigo) {
-        const base = window.location.href.replace(/admin\.html.*$/, "");
+        const base = new URL("./", window.location.href).href;
         return `${base}index.html?card=${encodeURIComponent(codigo)}`;
     }
 

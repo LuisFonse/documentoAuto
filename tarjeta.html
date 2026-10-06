@@ -526,7 +526,7 @@ document.addEventListener("DOMContentLoaded", () => {
     inNombre.value = params.get("nombre") || "";
     inPatente.value = (params.get("patente") || "").toUpperCase();
 
-    const base = window.location.href.replace(/tarjeta\.html.*$/, "");
+    const base = new URL("./", window.location.href).href;
     const linkFicha = `${base}index.html?card=${encodeURIComponent(codigo)}`;
 
     document.getElementById("btnProbar").href = linkFicha;
