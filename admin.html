@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Admin | Documentos Vehículo</title>
+    <link rel="icon" type="image/png" href="imagenes/favicon.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 <div class="contenedor admin-contenedor">
@@ -15,7 +16,7 @@
             <i class="bi bi-shield-lock-fill"></i>
         </div>
         <div class="hero-modelo">Panel Administrador</div>
-        <div class="hero-subtitulo">Usuarios habilitados y documentos del vehículo</div>
+        <div class="hero-subtitulo">Registro de usuarios habilitados</div>
     </header>
 
     <div id="estadoApp" class="admin-estado"></div>
@@ -24,10 +25,10 @@
         <h2><i class="bi bi-box-arrow-in-right"></i> Acceso Admin</h2>
         <form id="loginForm" class="admin-form">
             <label>Email</label>
-            <input id="emailInput" type="email" required placeholder="admin@correo.com">
+            <input id="emailInput" type="email" required placeholder="admin@correo.com" autocomplete="username">
 
             <label>Contraseña</label>
-            <input id="passwordInput" type="password" required placeholder="********">
+            <input id="passwordInput" type="password" required placeholder="********" autocomplete="current-password">
 
             <button type="submit" class="admin-btn principal">Iniciar sesión</button>
         </form>
@@ -41,16 +42,25 @@
                 <button id="logoutBtn" class="admin-btn secundario">Cerrar sesión</button>
             </div>
 
+            <p class="ayuda-texto">
+                Registra al usuario con su email. Luego el usuario entra a
+                <a id="linkPortal" class="link-simple" href="mi-auto.html" target="_blank" rel="noopener">mi-auto.html</a>,
+                crea su clave y sube sus documentos.
+            </p>
+
             <form id="clienteForm" class="admin-grid-form">
                 <input id="clienteNombre" type="text" required placeholder="Nombre cliente">
-                <input id="clienteEmail" type="email" placeholder="Email cliente">
+                <input id="clienteEmail" type="email" required placeholder="Email cliente (para su acceso)">
                 <input id="clienteTelefono" type="text" placeholder="Teléfono">
                 <input id="clienteNfc" type="text" required placeholder="Código NFC (único)">
                 <label class="check-inline">
                     <input id="clienteHabilitado" type="checkbox" checked>
                     Habilitado
                 </label>
-                <button type="submit" class="admin-btn principal">Crear usuario</button>
+                <div class="botones-fila">
+                    <button id="clienteSubmit" type="submit" class="admin-btn principal">Crear usuario</button>
+                    <button id="clienteCancelar" type="button" class="admin-btn secundario oculto">Cancelar</button>
+                </div>
             </form>
 
             <div class="tabla-scroll">
@@ -59,6 +69,8 @@
                     <tr>
                         <th>Cliente</th>
                         <th>NFC</th>
+                        <th>Vehículo</th>
+                        <th>Docs</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -67,41 +79,12 @@
                 </table>
             </div>
         </div>
-
-        <div class="tarjeta admin-card">
-            <h2><i class="bi bi-car-front-fill"></i> Vehículo y documentos</h2>
-
-            <label>Seleccionar cliente</label>
-            <select id="clienteSelect"></select>
-
-            <form id="vehiculoForm" class="admin-grid-form two-col">
-                <input id="vehiculoPatente" type="text" required placeholder="Patente">
-                <input id="vehiculoModelo" type="text" required placeholder="Modelo">
-                <button type="submit" class="admin-btn principal">Guardar vehículo</button>
-            </form>
-
-            <form id="documentoForm" class="admin-grid-form two-col">
-                <select id="docTipo" required>
-                    <option value="">Tipo documento</option>
-                    <option value="padron">Padrón</option>
-                    <option value="permiso_circulacion">Permiso de circulación</option>
-                    <option value="soap">Seguro obligatorio (SOAP)</option>
-                    <option value="revision_tecnica">Revisión técnica</option>
-                </select>
-                <input id="docNombre" type="text" required placeholder="Nombre visible">
-                <input id="docVence" type="date">
-                <input id="docArchivo" type="file" accept="application/pdf" required>
-                <button type="submit" class="admin-btn principal">Subir o reemplazar documento</button>
-            </form>
-
-            <div id="documentosAdmin" class="documentos-admin"></div>
-        </div>
     </section>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
-<script src="admin.js?v=2"></script>
+<script src="supabase-config.js?v=2"></script>
+<script src="admin.js?v=3"></script>
 </body>
 </html>

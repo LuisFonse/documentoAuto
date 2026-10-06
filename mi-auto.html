@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Auto | Mis documentos</title>
+    <link rel="icon" type="image/png" href="imagenes/favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css?v=5">
+</head>
+<body>
+<div class="contenedor admin-contenedor">
+
+    <header class="hero">
+        <div class="hero-icono">
+            <i class="bi bi-car-front-fill"></i>
+        </div>
+        <div class="hero-modelo">Mi Auto</div>
+        <div id="heroSub" class="hero-subtitulo">Administra los documentos de tu vehículo</div>
+    </header>
+
+    <div id="estadoApp" class="admin-estado oculto"></div>
+
+    <!-- ========== INICIAR SESIÓN ========== -->
+    <section id="vistaLogin" class="tarjeta admin-card vista oculto">
+        <h2><i class="bi bi-box-arrow-in-right"></i> Ingresar</h2>
+        <form id="loginForm" class="admin-form">
+            <label>Email</label>
+            <input id="loginEmail" type="email" required placeholder="tu@correo.com" autocomplete="username">
+
+            <label>Clave</label>
+            <input id="loginPassword" type="password" required placeholder="********" autocomplete="current-password">
+
+            <button type="submit" class="admin-btn principal">Ingresar</button>
+        </form>
+        <div class="enlaces-auth">
+            <button type="button" class="boton-link" data-ir="vistaRegistro">¿Primera vez? Crea tu clave</button>
+            <button type="button" class="boton-link" data-ir="vistaRecuperar">¿Olvidaste tu clave?</button>
+        </div>
+    </section>
+
+    <!-- ========== CREAR CLAVE (PRIMERA VEZ) ========== -->
+    <section id="vistaRegistro" class="tarjeta admin-card vista oculto">
+        <h2><i class="bi bi-person-plus-fill"></i> Crear mi clave</h2>
+        <p class="ayuda-texto">Usa el mismo email que registró el administrador. Te llegará un correo para confirmarlo.</p>
+        <form id="registroForm" class="admin-form">
+            <label>Email</label>
+            <input id="registroEmail" type="email" required placeholder="tu@correo.com" autocomplete="username">
+
+            <label>Clave (mínimo 8 caracteres)</label>
+            <input id="registroPassword" type="password" required minlength="8" autocomplete="new-password">
+
+            <label>Repite la clave</label>
+            <input id="registroPassword2" type="password" required minlength="8" autocomplete="new-password">
+
+            <button type="submit" class="admin-btn principal">Crear clave</button>
+        </form>
+        <div class="enlaces-auth">
+            <button type="button" class="boton-link" data-ir="vistaLogin">Ya tengo clave, ingresar</button>
+        </div>
+    </section>
+
+    <!-- ========== RECUPERAR CLAVE ========== -->
+    <section id="vistaRecuperar" class="tarjeta admin-card vista oculto">
+        <h2><i class="bi bi-envelope-fill"></i> Recuperar clave</h2>
+        <p class="ayuda-texto">Escribe tu email y te enviaremos un enlace para crear una clave nueva.</p>
+        <form id="recuperarForm" class="admin-form">
+            <label>Email</label>
+            <input id="recuperarEmail" type="email" required placeholder="tu@correo.com" autocomplete="username">
+            <button type="submit" class="admin-btn principal">Enviar enlace a mi correo</button>
+        </form>
+        <div class="enlaces-auth">
+            <button type="button" class="boton-link" data-ir="vistaLogin">Volver a ingresar</button>
+        </div>
+    </section>
+
+    <!-- ========== NUEVA CLAVE (DESDE EL CORREO) ========== -->
+    <section id="vistaNuevaClave" class="tarjeta admin-card vista oculto">
+        <h2><i class="bi bi-key-fill"></i> Crea tu nueva clave</h2>
+        <form id="nuevaClaveForm" class="admin-form">
+            <label>Nueva clave (mínimo 8 caracteres)</label>
+            <input id="nuevaPassword" type="password" required minlength="8" autocomplete="new-password">
+
+            <label>Repite la clave</label>
+            <input id="nuevaPassword2" type="password" required minlength="8" autocomplete="new-password">
+
+            <button type="submit" class="admin-btn principal">Guardar clave</button>
+        </form>
+    </section>
+
+    <!-- ========== PORTAL DEL USUARIO ========== -->
+    <section id="vistaPortal" class="vista oculto">
+
+        <div class="tarjeta admin-card">
+            <div class="admin-header-row">
+                <h2><i class="bi bi-person-circle"></i> <span id="nombreUsuario">Hola</span></h2>
+                <button id="logoutBtn" class="admin-btn secundario">Cerrar sesión</button>
+            </div>
+            <p class="ayuda-texto">
+                Tu ficha pública (la que se abre con tu tarjeta NFC):
+                <a id="linkFicha" class="link-simple" href="#" target="_blank" rel="noopener">ver ficha</a>
+            </p>
+        </div>
+
+        <div class="tarjeta admin-card">
+            <h2><i class="bi bi-car-front-fill"></i> Mi vehículo</h2>
+            <img id="fotoVehiculo" class="foto foto-mini oculto" alt="Foto del vehículo">
+            <form id="vehiculoForm" class="admin-grid-form two-col">
+                <input id="vehiculoPatente" type="text" required placeholder="Patente (ej: ABCD12)" maxlength="10">
+                <input id="vehiculoModelo" type="text" required placeholder="Marca y modelo">
+                <label class="campo-archivo">
+                    <span>Foto del vehículo (opcional)</span>
+                    <input id="vehiculoFoto" type="file" accept="image/*">
+                </label>
+                <button type="submit" class="admin-btn principal">Guardar vehículo</button>
+            </form>
+        </div>
+
+        <h2 class="titulo-seccion"><i class="bi bi-folder2-open"></i> Mis documentos</h2>
+        <div id="sinVehiculoAviso" class="admin-estado oculto">
+            Primero guarda los datos de tu vehículo para poder subir documentos.
+        </div>
+        <div id="documentosUsuario"></div>
+    </section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js?v=2"></script>
+<script src="mi-auto.js?v=1"></script>
+</body>
+</html>

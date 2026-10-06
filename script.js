@@ -251,59 +251,36 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const supabaseClient = window.supabase.createClient(config.url, config.anonKey);
 
-        const { data: cliente, error: clienteError } = await supabaseClient
-            .from("clientes")
-            .select("id, nombre, habilitado")
-            .eq("nfc_codigo", card)
-            .eq("habilitado", true)
-            .maybeSingle();
+        const { data: ficha, error } = await supabaseClient.rpc("ficha_publica", { p_codigo: card });
 
-        if (clienteError || !cliente) {
+        if (error || !ficha || !ficha.vehiculo) {
             return [];
         }
 
-        const { data: vehiculo, error: vehiculoError } = await supabaseClient
-            .from("vehiculos")
-            .select("id, patente, modelo")
-            .eq("cliente_id", cliente.id)
-            .maybeSingle();
-
-        if (vehiculoError || !vehiculo) {
-            return [];
-        }
-
+        const vehiculo = ficha.vehiculo;
+        fichaEncontrada = true;
         setHeroDesdeVehiculo(vehiculo);
 
-        const { data: documentosDb, error: documentosError } = await supabaseClient
-            .from("documentos")
-            .select("id, nombre, tipo, archivo_url, archivo_path, vence")
-            .eq("vehiculo_id", vehiculo.id)
-            .order("nombre", { ascending: true });
-
-        if (documentosError || !documentosDb) {
-            return [];
+        const foto = document.querySelector(".foto");
+        if (foto) {
+            if (vehiculo.foto_url) {
+                foto.src = vehiculo.foto_url;
+                foto.style.display = "block";
+            } else {
+                foto.style.display = "none";
+            }
         }
 
-        return documentosDb.map((doc) => {
-            let archivo = doc.archivo_url || "#";
-            if (!archivo && doc.archivo_path) {
-                const urlPublica = supabaseClient.storage
-                    .from(config.bucket || "documentos-vehiculo")
-                    .getPublicUrl(doc.archivo_path)
-                    .data?.publicUrl;
-                archivo = urlPublica || "#";
-            }
-
-            return {
-                nombre: doc.nombre,
-                tipo: doc.tipo,
-                icono: iconosPorTipo[doc.tipo] || iconosPorTipo.default,
-                archivo,
-                vence: doc.vence
-            };
-        });
+        return (ficha.documentos || []).map((doc) => ({
+            nombre: doc.nombre,
+            tipo: doc.tipo,
+            icono: iconosPorTipo[doc.tipo] || iconosPorTipo.default,
+            archivo: doc.archivo_url || "#",
+            vence: doc.vence
+        }));
     }
 
+    let fichaEncontrada = false;
     const card = getCardFromUrl();
 
     if (!card) {
@@ -317,6 +294,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (documentosSupabase === null) {
             renderAccesoRestringido("Configuracion de Supabase incompleta.");
+        } else if (documentosSupabase.length === 0 && fichaEncontrada) {
+            renderDocumentos([]);
+            document.getElementById("lista-documentos").innerHTML = `
+                <div class="tarjeta">
+                    <h2><i class="bi bi-folder2-open"></i> Sin documentos</h2>
+                    <p>Este vehículo aún no tiene documentos cargados.</p>
+                </div>
+            `;
         } else if (documentosSupabase.length === 0) {
             renderAccesoRestringido("No hay datos disponibles para este codigo NFC o el cliente esta bloqueado.");
         } else {
